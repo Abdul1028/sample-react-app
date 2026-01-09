@@ -43,7 +43,7 @@ function App() {
 
       
       <div className="header">
-        <h2>Supply Chain Operations</h2>
+        <h2>WA Ops Supply Chain Operations</h2>
         <span className={`env ${env.toLowerCase()}`}>{env}</span>
       </div>
 
@@ -81,7 +81,7 @@ function App() {
         </div>
 
         <div className="card">
-          <h3>Production</h3>
+          <h3>Staging</h3>
           <ul>
             {production.map((p, k) => (
               <li key={k}>
