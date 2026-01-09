@@ -53,10 +53,10 @@ jobs:
           DEPLOYMENT_ID="${{ env.deployment_id }}"
           
           if [ "$DEPLOYMENT_STATUS" = "success" ]; then
-            DEPLOYMENT_URL="https://supply.wareality.tech"
+            DEPLOYMENT_URL="https://$PROJECT_ID.wareality.tech"
             MESSAGE="Deployment to PRODUCTION environment for project $PROJECT_ID on branch main has completed successfully. Deployment ID: $DEPLOYMENT_ID. Commit: $COMMIT_SHORT. Access at: $DEPLOYMENT_URL"
           else
-            DEPLOYMENT_URL="https://supply.wareality.tech"
+            DEPLOYMENT_URL="https://$PROJECT_ID.wareality.tech"
             MESSAGE="Deployment to PRODUCTION environment for project $PROJECT_ID on branch main has failed. Deployment ID: $DEPLOYMENT_ID. Commit: $COMMIT_SHORT"
           fi
           
