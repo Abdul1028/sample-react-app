@@ -1,38 +1,186 @@
-.App {
-  text-align: center;
+/* ===== LIGHT THEME ===== */
+:root[theme=light] {
+  --bg: #f1f3f6;
+  --surface: #ffffff;
+  --text: #1c1c1c;
+  --text-strong: #111;
+  --subtext: #64748b;
+  --border: #e3e6ea;
+  --border-soft: #f1f5f9;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* ===== DARK THEME ===== */
+:root[theme=dark] {
+  --bg: #0f1114;
+  --surface: #1b1d21;
+  --text: #e5e7eb;
+  --text-strong: #f3f4f6;
+  --subtext: #9ca3af;
+  --border: #2a2f36;
+  --border-soft: #1f242a;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* ===== GLOBAL ===== */
+* {
+  box-sizing: border-box;
 }
 
-.App-header {
-  background-color: #282c34;
+.app {
+  padding: 32px;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
   min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+.header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin-bottom: 26px;
+}
+
+.header h2 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  font-size: 1.65rem;
+  color: var(--text-strong);
+}
+
+/* ===== ENV BADGE ===== */
+.env {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.75rem;
   color: white;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.env.production { background: #0f9d58; }
+.env.staging { background: #eab308; }
+
+/* ===== KPI ROW ===== */
+.kpi-row {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 26px;
 }
 
-.App-link {
-  color: #61dafb;
+.kpi-card {
+  flex: 1;
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 14px rgba(0,0,0,.08);
 }
+
+.kpi-card h4 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.kpi-card span {
+  font-size: .85rem;
+  color: var(--subtext);
+  margin-top: 4px;
+  display: inline-block;
+}
+
+/* ===== GRID ===== */
+.grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: var(--surface);
+  padding: 22px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  transition: box-shadow 0.12s ease, transform 0.12s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0,0,0,.08);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 14px;
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--text-strong);
+}
+
+/* ===== TABLES ===== */
+table {
+  width: 100%;
+  margin-top: 8px;
+  border-collapse: collapse;
+  font-size: .9rem;
+}
+
+table th {
+  text-align: left;
+  color: var(--subtext);
+  padding-bottom: 8px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+table td {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--text);
+}
+
+/* ===== LISTS ===== */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0;
+}
+
+ul li {
+  margin-bottom: 10px;
+  font-size: .9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ===== TAGS ===== */
+.tag {
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: .75rem;
+  color: white;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: .3px;
+}
+
+.tag.queued { background: #6366f1; }
+.tag.processing { background: #f59e0b; }
+.tag.shipped { background: #0f9d58; }
+.tag.running { background: #0f9d58; }
+.tag.maintenance { background: #d97706; }
+.tag.idle { background: #94a3b8; }
+.tag["in transit"] { background: #3b82f6; }
+.tag.delivered { background: #0f9d58; }
