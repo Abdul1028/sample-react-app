@@ -37,23 +37,22 @@ jobs:
           curl -s -X POST "https://api.wareality.tech/api/projects/${{ secrets.PROJECT_ID }}/deployments/${{ env.deployment_id }}/deploy?environment=PRODUCTION" \
             -H "Authorization: Bearer ${{ secrets.PUSHLY_TOKEN }}"
 
-            - name: Send Slack Notification
-              if: always()
-              run: |
-                COMMIT_SHORT=$(echo "${{ github.sha }}" | cut -c1-7)
-      
-                if [ "${{ job.status }}" = "success" ]; then
-                  MESSAGE="✅ Deployment successful for supply (PRODUCTION) | Commit: $COMMIT_SHORT | URL: https://supply.wareality.tech"
-                else
-                  MESSAGE="❌ Deployment failed for supply (PRODUCTION) | Commit: $COMMIT_SHORT"
-                fi
-      
-                MESSAGE_ESC=$(echo "$MESSAGE" | sed 's/"/\"/g')
-      
-                curl -X POST "${{ secrets.SLACK_WEBHOOK_URL }}" \
-                  -H "Content-Type: application/json" \
-                  -d "{\"text\": \"$MESSAGE_ESC\"}"
-      
+- name: Send Slack Notification
+  if: always()
+  run: |
+    COMMIT_SHORT=$(echo "${{ github.sha }}" | cut -c1-7)
+
+    if [ "${{ job.status }}" = "success" ]; then
+      MESSAGE="✅ Deployment successful for supply (PRODUCTION) | Commit: $COMMIT_SHORT | URL: https://supply.wareality.tech"
+    else
+      MESSAGE="❌ Deployment failed for supply (PRODUCTION) | Commit: $COMMIT_SHORT"
+    fi
+
+    MESSAGE_ESC=$(echo "$MESSAGE" | sed 's/"/\"/g')
+
+    curl -X POST "${{ secrets.SLACK_WEBHOOK_URL }}" \
+      -H "Content-Type: application/json" \
+      -d "{\"text\": \"$MESSAGE_ESC\"}"
 
       - name: Done
         run: echo "🎉 Deployment triggered successfully"
