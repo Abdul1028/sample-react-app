@@ -1,5 +1,5 @@
 /* ===== LIGHT THEME ===== */
-:root[theme=light] {
+:root[theme="light"] {
   --bg: #f1f3f6;
   --surface: #ffffff;
   --text: #1c1c1c;
@@ -10,7 +10,7 @@
 }
 
 /* ===== DARK THEME ===== */
-:root[theme=dark] {
+:root[theme="dark"] {
   --bg: #0f1114;
   --surface: #1b1d21;
   --text: #e5e7eb;
@@ -182,5 +182,6 @@ ul li {
 .tag.running { background: #0f9d58; }
 .tag.maintenance { background: #d97706; }
 .tag.idle { background: #94a3b8; }
-.tag["in transit"] { background: #3b82f6; }
+.tag.in-transit { background: #3b82f6; }
+
 .tag.delivered { background: #0f9d58; }
