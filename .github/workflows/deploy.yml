@@ -1,0 +1,71 @@
+name: Pushly Auto Deploy (PRODUCTION)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Trigger Deployment Creation
+        id: create_deployment
+        run: |
+          echo "🚀 Creating deployment record on Pushly..."
+          RESPONSE=$(curl -s -X POST "https://api.wareality.tech/api/projects/${{ secrets.PROJECT_ID }}/deployments" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.PUSHLY_TOKEN }}" \
+            -d "{
+              \"gitCommitHash\": \"${{ github.sha }}\",
+              \"gitBranch\": \"main\",
+              \"environment\": \"PRODUCTION\"
+            }")
+          
+          echo "Response: $RESPONSE"
+          DEPLOYMENT_ID=$(echo $RESPONSE | jq -r '.id')
+          
+          if [ "$DEPLOYMENT_ID" = "null" ] || [ -z "$DEPLOYMENT_ID" ]; then
+            echo "❌ Failed to create deployment"
+            exit 1
+          fi
+          echo "✅ Deployment created with ID: $DEPLOYMENT_ID"
+          echo "deployment_id=$DEPLOYMENT_ID" >> $GITHUB_ENV
+
+      - name: Trigger Actual Deployment
+        run: |
+          echo "🚀 Starting deployment to PRODUCTION environment..."
+          curl -s -X POST "https://api.wareality.tech/api/projects/${{ secrets.PROJECT_ID }}/deployments/${{ env.deployment_id }}/deploy?environment=PRODUCTION" \
+            -H "Authorization: Bearer ${{ secrets.PUSHLY_TOKEN }}"
+          echo "✅ Deployment triggered to PRODUCTION!"
+      - name: Send Slack Notification
+        if: always()
+        run: |
+          DEPLOYMENT_STATUS="${{ job.status }}"
+          COMMIT_MSG=$(git log -1 --pretty=%B | head -c 200)
+          COMMIT_SHORT=$(echo "${{ github.sha }}" | cut -c1-7)
+          PROJECT_ID="${{ secrets.PROJECT_ID }}"
+          DEPLOYMENT_ID="${{ env.deployment_id }}"
+          
+          if [ "$DEPLOYMENT_STATUS" = "success" ]; then
+            DEPLOYMENT_URL="https://supply.wareality.tech"
+            MESSAGE="Deployment to PRODUCTION environment for project $PROJECT_ID on branch main has completed successfully. Deployment ID: $DEPLOYMENT_ID. Commit: $COMMIT_SHORT. Access at: $DEPLOYMENT_URL"
+          else
+            DEPLOYMENT_URL="https://supply.wareality.tech"
+            MESSAGE="Deployment to PRODUCTION environment for project $PROJECT_ID on branch main has failed. Deployment ID: $DEPLOYMENT_ID. Commit: $COMMIT_SHORT"
+          fi
+          
+          # Escape message for JSON
+          MESSAGE_ESC=$(echo "$MESSAGE" | sed 's/"/\"/g')
+          
+          curl -X POST "${{ secrets.SLACK_WEBHOOK_URL }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"text\": \"$MESSAGE_ESC\"}"
+
+      - name: Done
+        run: echo "🎉 Pushly Deployment to PRODUCTION initiated successfully!"
