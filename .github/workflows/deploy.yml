@@ -1,4 +1,4 @@
-name: Pushly Auto Deploy (PRODUCTION)
+name: Pushly Auto Deploy (STAGING)
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy-production:
+  deploy-staging:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -20,7 +20,7 @@ jobs:
             -d "{
               \"gitCommitHash\": \"${{ github.sha }}\",
               \"gitBranch\": \"main\",
-              \"environment\": \"PRODUCTION\"
+              \"environment\": \"STAGING\"
             }")
 
           DEPLOYMENT_ID=$(echo $RESPONSE | jq -r '.id')
@@ -34,7 +34,7 @@ jobs:
 
       - name: Trigger Deployment
         run: |
-          curl -s -X POST "https://api.wareality.tech/api/projects/${{ secrets.PROJECT_ID }}/deployments/${{ env.deployment_id }}/deploy?environment=PRODUCTION" \
+          curl -s -X POST "https://api.wareality.tech/api/projects/${{ secrets.PROJECT_ID }}/deployments/${{ env.deployment_id }}/deploy?environment=STAGING" \
             -H "Authorization: Bearer ${{ secrets.PUSHLY_TOKEN }}"
 
       - name: Send Slack Notification
@@ -43,9 +43,9 @@ jobs:
           COMMIT_SHORT=$(echo "${{ github.sha }}" | cut -c1-7)
 
           if [ "${{ job.status }}" = "success" ]; then
-            MESSAGE="✅ Deployment successful for supply (PRODUCTION) | Commit: $COMMIT_SHORT | URL: https://supply.wareality.tech"
+            MESSAGE="✅ Deployment successful for supply (STAGING) | Commit: $COMMIT_SHORT | URL: https://${{ env.deployment_id }}--supply.wareality.tech"
           else
-            MESSAGE="❌ Deployment failed for supply (PRODUCTION) | Commit: $COMMIT_SHORT"
+            MESSAGE="❌ Deployment failed for supply (STAGING) | Commit: $COMMIT_SHORT"
           fi
 
           MESSAGE_ESC=$(echo "$MESSAGE" | sed 's/"/\"/g')
