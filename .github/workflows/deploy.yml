@@ -1,16 +1,24 @@
-name: Pushly Auto Deploy (STAGING)
+name: Pushly Auto Deploy
 
 on:
   push:
     branches:
-      - main
+      - "**"
 
 jobs:
-  deploy-staging:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Determine Environment
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "ENVIRONMENT=PRODUCTION" >> $GITHUB_ENV
+          else
+            echo "ENVIRONMENT=STAGING" >> $GITHUB_ENV
+          fi
 
       - name: Create Deployment
         run: |
@@ -19,8 +27,8 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.PUSHLY_TOKEN }}" \
             -d "{
               \"gitCommitHash\": \"${{ github.sha }}\",
-              \"gitBranch\": \"main\",
-              \"environment\": \"STAGING\"
+              \"gitBranch\": \"${{ github.ref_name }}\",
+              \"environment\": \"$ENVIRONMENT\"
             }")
 
           DEPLOYMENT_ID=$(echo $RESPONSE | jq -r '.id')
@@ -34,7 +42,7 @@ jobs:
 
       - name: Trigger Deployment
         run: |
-          curl -s -X POST "https://api.wareality.tech/api/projects/${{ secrets.PROJECT_ID }}/deployments/${{ env.deployment_id }}/deploy?environment=STAGING" \
+          curl -s -X POST "https://api.wareality.tech/api/projects/${{ secrets.PROJECT_ID }}/deployments/${{ env.deployment_id }}/deploy?environment=$ENVIRONMENT" \
             -H "Authorization: Bearer ${{ secrets.PUSHLY_TOKEN }}"
 
       - name: Send Slack Notification
@@ -42,10 +50,16 @@ jobs:
         run: |
           COMMIT_SHORT=$(echo "${{ github.sha }}" | cut -c1-7)
 
-          if [ "${{ job.status }}" = "success" ]; then
-            MESSAGE="✅ Deployment successful for supply (STAGING) | Commit: $COMMIT_SHORT | URL: https://${{ env.deployment_id }}--supply.wareality.tech"
+          if [ "$ENVIRONMENT" = "PRODUCTION" ]; then
+            DEPLOYMENT_URL="https://supply.wareality.tech"
           else
-            MESSAGE="❌ Deployment failed for supply (STAGING) | Commit: $COMMIT_SHORT"
+            DEPLOYMENT_URL="https://${{ env.deployment_id }}--supply.wareality.tech"
+          fi
+
+          if [ "${{ job.status }}" = "success" ]; then
+            MESSAGE="✅ Deployment successful for supply ($ENVIRONMENT) | Commit: $COMMIT_SHORT | URL: $DEPLOYMENT_URL"
+          else
+            MESSAGE="❌ Deployment failed for supply ($ENVIRONMENT) | Commit: $COMMIT_SHORT"
           fi
 
           MESSAGE_ESC=$(echo "$MESSAGE" | sed 's/"/\"/g')
