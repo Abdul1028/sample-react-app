@@ -7,10 +7,10 @@ function App() {
     : "PRODUCTION";
 
   const kpis = {
-    totalOrders: 128,
-    pending: 24,
-    shipped: 90,
-    inventoryValue: "$1.2M"
+    totalOrders: 1280,
+    pending: 240,
+    shipped: 900,
+    inventoryValue: "$1.20M"
   };
 
   const inventory = [
