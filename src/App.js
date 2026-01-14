@@ -14,7 +14,7 @@ function App() {
   };
 
   const inventory = [
-    { item: "Resin Binder", qty: 9000, unit: "kg" },
+    { item: "Resin Binder", qty: 90000, unit: "kg" },
     { item: "Titanium Oxide", qty: 650, unit: "kg" },
     { item: "Solvent", qty: 1200, unit: "L" },
     { item: "Packaging Boxes", qty: 800, unit: "pcs" }
