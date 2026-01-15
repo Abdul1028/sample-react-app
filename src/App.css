@@ -60,6 +60,13 @@
   background-clip: text;
 }
 
+@supports not (background-clip: text) {
+  .header h2 {
+    background: none;
+    -webkit-text-fill-color: initial;
+  }
+}
+
 /* ===== ENV BADGE ===== */
 .env {
   padding: 8px 16px;

@@ -57,7 +57,7 @@ function App() {
       
       <div className="header">
         <h2>WA Ops Supply Chain Operations</h2>
-        <span className={`env ${env.toLowerCase()}`}>{env}</span>
+        <span className={`env ${env.toLowerCase().replace(/\s+/g, '-')}`}>{env}</span>
       </div>
 
       <div className="kpi-row">
