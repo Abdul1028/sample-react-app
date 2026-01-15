@@ -5,14 +5,14 @@ function App() {
   const env = "copilot branch";
 
   const kpis = {
-    totalOrders: 128,
-    pending: 24,
-    shipped: 90,
-    inventoryValue: "$1.2M"
+    totalOrders: 10288,
+    pending: 2480,
+    shipped: 900,
+    inventoryValue: "$1.20M"
   };
 
   const inventory = [
-    { item: "Resin Binder", qty: 900, unit: "kg" },
+    { item: "Resin Binder", qty: 90000, unit: "kg" },
     { item: "Titanium Oxide", qty: 650, unit: "kg" },
     { item: "Solvent", qty: 1200, unit: "L" },
     { item: "Packaging Boxes", qty: 800, unit: "pcs" }
