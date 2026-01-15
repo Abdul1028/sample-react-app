@@ -5,35 +5,50 @@ function App() {
   const env = "copilot branch";
 
   const kpis = {
-    totalOrders: 10288,
-    pending: 2480,
-    shipped: 900,
-    inventoryValue: "$1.20M"
+    totalOrders: 12845,
+    pending: 3125,
+    shipped: 8956,
+    inventoryValue: "$2.45M"
   };
 
   const inventory = [
     { item: "Resin Binder", qty: 90000, unit: "kg" },
     { item: "Titanium Oxide", qty: 650, unit: "kg" },
     { item: "Solvent", qty: 1200, unit: "L" },
-    { item: "Packaging Boxes", qty: 800, unit: "pcs" }
+    { item: "Packaging Boxes", qty: 800, unit: "pcs" },
+    { item: "Pigment Blue", qty: 450, unit: "kg" },
+    { item: "Adhesive Compound", qty: 2800, unit: "L" },
+    { item: "Safety Labels", qty: 5500, unit: "pcs" },
+    { item: "Plastic Caps", qty: 12000, unit: "pcs" }
   ];
 
   const orders = [
     { id: "ORD-1202", client: "Client A", status: "Queued" },
     { id: "ORD-1203", client: "Client B", status: "Processing" },
     { id: "ORD-1204", client: "Client C", status: "Shipped" },
-    { id: "ORD-1205", client: "Client D", status: "Queued" }
+    { id: "ORD-1205", client: "Client D", status: "Queued" },
+    { id: "ORD-1206", client: "Client E", status: "Processing" },
+    { id: "ORD-1207", client: "Client F", status: "Shipped" },
+    { id: "ORD-1208", client: "Client G", status: "Queued" },
+    { id: "ORD-1209", client: "Client H", status: "Processing" }
   ];
 
   const production = [
     { line: "Line 1", status: "Running" },
     { line: "Line 2", status: "Maintenance" },
     { line: "Line 3", status: "Idle" },
+    { line: "Line 4", status: "Running" },
+    { line: "Line 5", status: "Running" },
+    { line: "Line 6", status: "Idle" },
   ];
 
   const logistics = [
     { shipment: "SHP-5501", carrier: "DHL", eta: "2 days", status: "In Transit" },
     { shipment: "SHP-5502", carrier: "BlueDart", eta: "Delivered", status: "Delivered" },
+    { shipment: "SHP-5503", carrier: "FedEx", eta: "1 day", status: "In Transit" },
+    { shipment: "SHP-5504", carrier: "UPS", eta: "3 days", status: "In Transit" },
+    { shipment: "SHP-5505", carrier: "DHL", eta: "Delivered", status: "Delivered" },
+    { shipment: "SHP-5506", carrier: "BlueDart", eta: "4 days", status: "In Transit" },
   ];
 
   return (
