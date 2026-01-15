@@ -1,0 +1,216 @@
+.order-stats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card.queued {
+  border-color: #6366f1;
+  background: linear-gradient(135deg, var(--surface), rgba(99, 102, 241, 0.1));
+}
+
+.stat-card.processing {
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, var(--surface), rgba(245, 158, 11, 0.1));
+}
+
+.stat-card.shipped {
+  border-color: #3b82f6;
+  background: linear-gradient(135deg, var(--surface), rgba(59, 130, 246, 0.1));
+}
+
+.stat-card.delivered {
+  border-color: #10b981;
+  background: linear-gradient(135deg, var(--surface), rgba(16, 185, 129, 0.1));
+}
+
+.stat-card.revenue {
+  border-color: #8b5cf6;
+  background: linear-gradient(135deg, var(--surface), rgba(139, 92, 246, 0.1));
+}
+
+.order-controls {
+  margin-bottom: 24px;
+}
+
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 12px 0;
+}
+
+.order-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.order-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.order-card.queued::before {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+}
+
+.order-card.processing::before {
+  background: linear-gradient(90deg, #f59e0b, #f97316);
+}
+
+.order-card.shipped::before {
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+}
+
+.order-card.delivered::before {
+  background: linear-gradient(90deg, #059669, #10b981);
+}
+
+.order-card.cancelled::before {
+  background: linear-gradient(90deg, #64748b, #94a3b8);
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  border-color: var(--accent);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.order-id {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+.priority-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.priority-badge.high {
+  background: #ef4444;
+  color: white;
+}
+
+.priority-badge.normal {
+  background: #3b82f6;
+  color: white;
+}
+
+.priority-badge.low {
+  background: #94a3b8;
+  color: white;
+}
+
+.order-client {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  color: var(--text-strong);
+}
+
+.order-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: var(--border-soft);
+  border-radius: 8px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.detail-label {
+  color: var(--subtext);
+  font-weight: 600;
+}
+
+.detail-value {
+  color: var(--text-strong);
+  font-weight: 700;
+}
+
+.order-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.queued {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+}
+
+.status-badge.processing {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  color: white;
+}
+
+.status-badge.shipped {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: white;
+}
+
+.status-badge.delivered {
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: white;
+}
+
+.status-badge.cancelled {
+  background: linear-gradient(135deg, #64748b, #94a3b8);
+  color: white;
+}
+
+@media (max-width: 1024px) {
+  .order-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .orders-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .order-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .orders-grid {
+    grid-template-columns: 1fr;
+  }
+}
