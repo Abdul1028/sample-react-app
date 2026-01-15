@@ -2,9 +2,7 @@ import "./App.css";
 import "./index.css";
 
 function App() {
-  const env = window.location.hostname.includes("staging")
-    ? "STAGING"
-    : "PRODUCTION";
+  const env = "STAGING FORM FEATURE BRANCH"
 
   const kpis = {
     totalOrders: 1280,
