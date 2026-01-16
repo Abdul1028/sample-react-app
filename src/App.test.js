@@ -1,34 +1,31 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders WA Ops Supply Chain Operations header', () => {
+test('renders navigation with WA Ops brand', () => {
   render(<App />);
-  const headerElement = screen.getByText(/WA Ops Supply Chain Operations/i);
-  expect(headerElement).toBeInTheDocument();
+  const brandElement = screen.getByText(/WA Ops/i);
+  expect(brandElement).toBeInTheDocument();
 });
 
-test('renders KPI cards', () => {
+test('renders navigation menu items', () => {
   render(<App />);
-  const totalOrders = screen.getByText(/Total Orders/i);
-  const pending = screen.getByText(/Pending/i);
-  const shipped = screen.getAllByText(/Shipped/i);
-  const inventoryValue = screen.getByText(/Inventory Value/i);
+  const dashboard = screen.getByText(/Dashboard/i);
+  const inventory = screen.getByText(/Inventory/i);
+  const orders = screen.getByText(/Orders/i);
+  const production = screen.getByText(/Production/i);
+  const logistics = screen.getByText(/Logistics/i);
+  const analytics = screen.getByText(/Analytics/i);
   
-  expect(totalOrders).toBeInTheDocument();
-  expect(pending).toBeInTheDocument();
-  expect(shipped.length).toBeGreaterThan(0);
-  expect(inventoryValue).toBeInTheDocument();
-});
-
-test('renders all sections', () => {
-  render(<App />);
-  const inventory = screen.getByText('Inventory');
-  const orders = screen.getByText('Orders');
-  const staging = screen.getByText('Staging');
-  const logistics = screen.getByText('Logistics');
-  
+  expect(dashboard).toBeInTheDocument();
   expect(inventory).toBeInTheDocument();
   expect(orders).toBeInTheDocument();
-  expect(staging).toBeInTheDocument();
+  expect(production).toBeInTheDocument();
   expect(logistics).toBeInTheDocument();
+  expect(analytics).toBeInTheDocument();
+});
+
+test('renders dashboard page by default', () => {
+  render(<App />);
+  const dashboardHeader = screen.getByText(/Dashboard Overview/i);
+  expect(dashboardHeader).toBeInTheDocument();
 });
