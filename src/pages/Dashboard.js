@@ -8,7 +8,7 @@ function Dashboard() {
     totalOrders: 128450,
     pending: 31250,
     shipped: 89560,
-    inventoryValue: "$2.45M"
+    inventoryValue: "$2.450M"
   };
 
   const recentActivity = [
