@@ -5,10 +5,10 @@ function Dashboard() {
   const env = "main branch";
 
   const kpis = {
-    totalOrders: 12845,
-    pending: 3125,
-    shipped: 8956,
-    inventoryValue: "$2.45M"
+    totalOrders: 128450,
+    pending: 31250,
+    shipped: 89560,
+    inventoryValue: "$2.450M"
   };
 
   const recentActivity = [
