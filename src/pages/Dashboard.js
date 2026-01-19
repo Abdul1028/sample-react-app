@@ -2,7 +2,7 @@ import React from 'react';
 import './Dashboard.css';
 
 function Dashboard() {
-  const env = "copilot create multip page branch";
+  const env = "main branch";
 
   const kpis = {
     totalOrders: 128450,
