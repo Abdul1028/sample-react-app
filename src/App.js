@@ -2,7 +2,7 @@ import "./App.css";
 import "./index.css";
 
 function App() {
-  const env = "copilot branch";
+  const env = "update kpi";
 
   const kpis = {
     totalOrders: 10288,
